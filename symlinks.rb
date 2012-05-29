@@ -11,6 +11,7 @@ SYMLINK_DIR = ARGV[1]
 
 Find.find(TARGET_DIR) do |target_path|
   begin
+    next if File::ftype(target_path) == "directory"
     next if target_path !~ /^#{TARGET_DIR.chomp("/")}\/(.*)/
   rescue ArgumentError => e
     STDERR.puts target_path
@@ -19,7 +20,7 @@ Find.find(TARGET_DIR) do |target_path|
   symlink_path = File.join(SYMLINK_DIR, $1)
   results = `diff #{target_path} #{symlink_path}`
   if results.size == 0
-    puts "ln -sf #{target_path} #{symlink_path}"
-    %x(ln -sf #{target_path} #{symlink_path})
+    puts "ln -f #{target_path} #{symlink_path}"
+    %x(ln -f #{target_path} #{symlink_path})
   end
 end

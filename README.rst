@@ -20,5 +20,9 @@ How to install
 How to use
 ----------
 
+::
+
   ruby symlinks.rb TARGET_DIR SYMLINK_DIR
+
+Oops, now this script makes hard links instead of symbolic links :-p
 
